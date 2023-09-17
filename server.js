@@ -1,11 +1,9 @@
 const express = require('express');
 const path = require('path');
 const sql = require('mssql');
-//const bcrypt = require('bcrypt');
 const argon2 = require('argon2');
 const app = express();
 const session = require('express-session');
-//const saltRounds = 10;
 const port = 3000;
 
 // Konfiguracja połączenia z bazą danych MSSQL
@@ -33,14 +31,6 @@ app.use(
 );
 
 // Funkcja do porównywania hasła z zahaszowanym hasłem
-/* const comparePassword = async (password, hashedPassword) => {
-  try {
-    return await bcrypt.compare(password, hashedPassword);
-  } catch (err) {
-    console.error('Błąd podczas porównywania hasła:', err);
-    throw err;
-  }
-}; */
 const comparePassword = async (password, hashedPassword) => {
   try {
     return await argon2.verify(hashedPassword, password);
@@ -52,14 +42,6 @@ const comparePassword = async (password, hashedPassword) => {
 
 
 // Funkcja do hashowania hasła
-/* const hashPassword = async (password) => {
-  try {
-    return await bcrypt.hash(password, saltRounds);
-  } catch (err) {
-    console.error('Błąd podczas hashowania hasła:', err);
-    throw err;
-  }
-} */
 const hashPassword = async (password) => {
   try {
     const options = {
@@ -90,7 +72,7 @@ app.post('/login', async (req, res) => {
 
       if (isPasswordCorrect) {
         //req.session.user = user;
-        res.json({ success: true, message: 'Zalogowano pomyślnie!', email: user.email });
+        res.json({ success: true, message: 'Zalogowano pomyślnie!', email: user.email, id: user.id });
       } else {
         res.json({ success: false, message: 'Błędne hasło!' });
       } 
@@ -131,10 +113,10 @@ app.post('/register', async (req, res) => {
 })
 
 app.post('/create', async (req, res) => {
-  const { name, description, address } = req.body;
+  const { name, description, price, phone, email, address, city, owner } = req.body;
   try {
     await sql.connect(config);
-    const result = await sql.query(`INSERT INTO `);
+    const result = await sql.query(`INSERT INTO Advertisements (owner_id, name, description, price, phone, email, city, address) VALUES (\'${owner}\', \'${name}\', \'${description}\', \'${price}\', \'${phone}\', \'${email}\', \'${city}\', \'${address}\')`);
     
   } catch (err) {
     console.error('Błąd Tworzenia zgłoszenia:', err);

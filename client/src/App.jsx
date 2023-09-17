@@ -15,6 +15,7 @@ function App() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [loggedInUser, setLoggedInUser] = useState('');
   const [loggedInUserEmail, setLoggedInUserEmail] = useState('');
+  const [loggedInUserId, setLoggedInUserId] = useState(null);
 
   const handleLogin = async (username, password) => {
     try {
@@ -29,9 +30,10 @@ function App() {
       const data = await response.json();
 
       if (data.success) {
-        setIsLoggedIn(true);
-        setLoggedInUser(username);
-        setLoggedInUserEmail(data.email);
+        setIsLoggedIn(true)
+        setLoggedInUser(username)
+        setLoggedInUserEmail(data.email)
+        setLoggedInUserId(data.id)
         alert(data.message)
       } else {
         console.log(data.message);
@@ -66,8 +68,22 @@ function App() {
     alert('Wylogowano')
   };
 
-  const handleAdvertisement = () => {
+  const handleAdvertisement = async (name, description, price ,phone, email, address, city, owner=loggedInUserId) => {
+    try {
+      const response = await fetch('/create', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ name, description, price, phone, email, address, city, owner }),
+      });
 
+      const data = await response.json();
+
+      alert(data.message)
+    } catch (error) {
+      console.error('Błąd tworzenia ogłoszenia:', error);
+    }
   }
 
   return (
@@ -84,7 +100,7 @@ function App() {
         {isLoggedIn ? (
           <>
             <Route path='/AdvertisementCreate' element={
-              <AdvertisementCreate />
+              <AdvertisementCreate handleAdvertisement={handleAdvertisement}/>
             } />
             <Route path='/Logout' element={
               <Logout onLogout={handleLogout}/>
@@ -105,7 +121,10 @@ function App() {
           <AdvertisementPage />
         } />
         
-        
+        <Route element={
+          <Home isLoggedIn={isLoggedIn} loggedInUser={loggedInUser} />
+        } />
+
       </Routes>
     </Router>
     <Footer />
