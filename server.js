@@ -126,6 +126,21 @@ app.post('/create', async (req, res) => {
   }
 })
 
+app.post('/show', async (req, res) => {
+  const { id } = req.body;
+  try {
+    await sql.connect(config);
+    const result = await sql.query(`SELECT * FROM Advertisements WHERE id=\'${id}\'`);
+    
+  } catch (err) {
+    console.error('Błąd wczytywania zgłoszenia:', err);
+    res.json({ success: false, message: 'Wystąpił błąd wczytywania zgłoszenia.' });
+  } finally {
+    sql.close();
+  }
+})
+
+
 
 // Serwowanie plików statycznych z folderu 'client/build'
 app.use(express.static(path.join(__dirname, 'client', 'build')));
