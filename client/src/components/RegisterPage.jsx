@@ -11,21 +11,21 @@ const RegisterPage = ({ handleRegister }) => {
   
 
   const handleSubmit = async (e) => {
-  e.preventDefault();
+    e.preventDefault();
 
-  if(password === password2){
-    // Wywołanie funkcji obsługującej rejestracje
-    handleRegister(email, username, password);
-    navigate('/LoginPage');
-  } else {
-    alert('Hasła nie zgadzają się ze sobą')
-    //navigate('/RegisterPage');
-  }
-  // Wyczyszczenie pól formularza
-  setEmail('');
-  setUsername('');
-  setPassword('');
-  setPassword2('');
+    if(password === password2){
+      // Wywołanie funkcji obsługującej rejestracje
+      handleRegister(email, username, password);
+      navigate('/LoginPage');
+    } else {
+      alert('Hasła nie zgadzają się ze sobą')
+      //navigate('/RegisterPage');
+    }
+    // Wyczyszczenie pól formularza
+    setEmail('');
+    setUsername('');
+    setPassword('');
+    setPassword2('');
 
   
   };

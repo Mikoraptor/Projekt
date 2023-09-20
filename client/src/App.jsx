@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { BrowserRouter as Router, Routes, Route, useSearchParams } from 'react-router-dom';
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import LoginPage from './components/LoginPage';
 import RegisterPage from './components/RegisterPage';
 import Navbar from './components/Navbar';
@@ -11,12 +11,14 @@ import AdvertisementPage from './components/AdvertisementPage';
 import AdvertisementCreate from './components/AdvertisementCreate';
 import Advertisements from './components/Advertisements';
 
-function App(props) {
-  
+function App() {
+
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [loggedInUser, setLoggedInUser] = useState('');
   const [loggedInUserEmail, setLoggedInUserEmail] = useState('');
   const [loggedInUserId, setLoggedInUserId] = useState(null);
+  
+
   const handleLogin = async (username, password) => {
     try {
       const response = await fetch('/login', {
@@ -55,7 +57,7 @@ function App(props) {
       });
 
       const data = await response.json();
-
+      
       alert(data.message)
     } catch (error) {
       console.error('Błąd Rejestracji:', error);
@@ -86,7 +88,12 @@ function App(props) {
     }
   }
 
-  const handleAdvertisementShow = async ( id ) => {
+  const handleAdvertisementShow = async (  ) => {
+    
+  }
+
+  const handleAdvertisementPage = async ( id ) => {
+    
     try {
       const response = await fetch('/show', {
         method: 'POST',
@@ -97,15 +104,12 @@ function App(props) {
       });
 
       const data = await response.json();
-
-      alert(data.message)
+      return data
+      //alert(data.name)
+      //console.log(data.name)
     } catch (error) {
       console.error('Błąd wyświetlania ogłoszenia:', error);
     }
-  }
-
-  const handleAdvertisementPage = async (  ) => {
-
   }
 
   return (
@@ -136,12 +140,12 @@ function App(props) {
           </>
         )}
         
-        <Route path='/AdvertisementPage' element={
+        <Route path='/AdvertisementPage/:id' element={
           <AdvertisementPage AdvertisementPage={handleAdvertisementPage}/>
         } />
 
         <Route path='/Advertisements' element={
-          <Advertisements Advertisements={handleAdvertisementShow}/>
+          <Advertisements  Advertisements={handleAdvertisementShow}/>
         } />
         
         <Route element={

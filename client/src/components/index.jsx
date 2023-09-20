@@ -2,6 +2,8 @@ import React from 'react';
 
 
 const Home = ({ isLoggedIn, loggedInUser }) => {
+  
+
   return (
     
       <div className="container">

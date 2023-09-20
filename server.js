@@ -116,7 +116,7 @@ app.post('/create', async (req, res) => {
   const { name, description, price, phone, email, address, city, owner } = req.body;
   try {
     await sql.connect(config);
-    const result = await sql.query(`INSERT INTO Advertisements (owner_id, name, description, price, phone, email, city, address) VALUES (\'${owner}\', \'${name}\', \'${description}\', \'${price}\', \'${phone}\', \'${email}\', \'${city}\', \'${address}\')`);
+    await sql.query(`INSERT INTO Advertisements (owner_id, name, description, price, phone, email, city, address) VALUES (\'${owner}\', \'${name}\', \'${description}\', \'${price}\', \'${phone}\', \'${email}\', \'${city}\', \'${address}\')`);
     
   } catch (err) {
     console.error('Błąd Tworzenia zgłoszenia:', err);
@@ -131,7 +131,8 @@ app.post('/show', async (req, res) => {
   try {
     await sql.connect(config);
     const result = await sql.query(`SELECT * FROM Advertisements WHERE id=\'${id}\'`);
-    
+    res.json(result.recordset[0]);
+    console.log(result.recordset[0])
   } catch (err) {
     console.error('Błąd wczytywania zgłoszenia:', err);
     res.json({ success: false, message: 'Wystąpił błąd wczytywania zgłoszenia.' });
@@ -139,6 +140,22 @@ app.post('/show', async (req, res) => {
     sql.close();
   }
 })
+
+app.post('/read', async (req, res) => {
+  //const { id } = req.body;
+  try {
+    await sql.connect(config);
+    const result = await sql.query(`SELECT TOP (25) * FROM Advertisements`);
+    res.json(result);
+    console.log(result)
+  } catch (err) {
+    console.error('Błąd wczytywania zgłoszeń:', err);
+    res.json({ success: false, message: 'Wystąpił błąd wczytywania zgłoszeń.' });
+  } finally {
+    sql.close();
+  }
+})
+
 
 
 
