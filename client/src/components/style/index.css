@@ -9,15 +9,12 @@ body, html {
   color: #000; /* Kolor tekstu */
 }
 
-/* Styl dla nagłówka */
-header {
-  background-color: #e5e5e5; /* Kolor tła nagłówka */
-  padding: 20px;
-}
-
 
 /* Styl dla głównego kontenera strony */
 .container {
+  height: 100vh;
+  font-family: "Roboto", sans-serif;
+  text-align: center;
   background-color: #fff;
   max-width: 1200px;
   margin: 0 auto;
@@ -77,16 +74,57 @@ header {
   cursor: pointer;
 }
 
-/* Styl dla sekcji na stronie */
-section {
-  padding: 20px;
-  margin-bottom: 20px;
-  background-color: #000000;
+.NonAdv{
+  position: relative;
+  border-radius: 10px;
+  z-index: 1;
+  background: #fff;
+  max-width: 480px;
+  margin: 0 auto 100px;
+  padding: 45px;
+  margin-top: 70px;
+  text-align: center;
+  box-shadow: 0 0 20px 0 rgba(0, 0, 0, 0.2), 0 5px 5px 0 rgba(0, 0, 0, 0.24);
 }
 
-/* Styl dla nagłówków sekcji */
-section h1 {
-  color: #e5e5e5;
+.Adv{
+  text-decoration: none;
+  color: #000;
+  display: inline-block;
+  border-radius: 10px;
+  z-index: 1;
+  background: #e5e5e5;
+  width: 40%;
+  max-width: 480px;
+  padding: 25px;
+  margin: 10px;
+  text-align: center;
+  box-shadow: 0 0 20px 0 rgba(0, 0, 0, 0.2), 0 5px 5px 0 rgba(0, 0, 0, 0.24);
+}
+
+.AdvMain{
+  
+  display: inline-grid;
+  border-radius: 10px;
+  background: #fff;
+  width: 45%;
+  max-width: 480px;
+  padding: 25px;
+  margin: 10px;
+  text-align: justify;
+  box-shadow: 0 0 20px 0 rgba(0, 0, 0, 0.2), 0 5px 5px 0 rgba(0, 0, 0, 0.24);
+}
+
+.AdvInfos{
+  display: inline-grid;
+  border-radius: 10px;
+  background: #e5e5e5;
+  width: 45%;
+  max-width: 480px;
+  padding: 25px;
+  margin: 10px;
+  text-align: center;
+  box-shadow: 0 0 20px 0 rgba(0, 0, 0, 0.2), 0 5px 5px 0 rgba(0, 0, 0, 0.24);
 }
 
 /* Styl dla treści tekstu */
@@ -94,7 +132,7 @@ p {
   line-height: 1.6;
 }
 
-/* Styl dla stopki */
+
 footer {
   background-color: #fca311;
   padding: 20px;

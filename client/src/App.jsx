@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import { useNavigate, BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import LoginPage from './components/LoginPage';
 import RegisterPage from './components/RegisterPage';
 import Navbar from './components/Navbar';
@@ -12,7 +12,6 @@ import AdvertisementCreate from './components/AdvertisementCreate';
 import Advertisements from './components/Advertisements';
 
 function App() {
-
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [loggedInUser, setLoggedInUser] = useState('');
   const [loggedInUserEmail, setLoggedInUserEmail] = useState('');
@@ -88,14 +87,29 @@ function App() {
     }
   }
 
-  const handleAdvertisementShow = async (  ) => {
-    
+  const handleAdvertisementShow = async ( page ) => {
+    try {
+      const response = await fetch('/show', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ page }),
+      });
+
+      const data = await response.json();
+      //console.log(data)
+      return data
+      
+    } catch (error) {
+      console.error('Błąd wyświetlania ogłoszenia:', error);
+    }
   }
 
   const handleAdvertisementPage = async ( id ) => {
     
     try {
-      const response = await fetch('/show', {
+      const response = await fetch('/read', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -105,6 +119,7 @@ function App() {
 
       const data = await response.json();
       return data
+      
       //alert(data.name)
       //console.log(data.name)
     } catch (error) {
@@ -144,11 +159,10 @@ function App() {
           <AdvertisementPage AdvertisementPage={handleAdvertisementPage}/>
         } />
 
-        <Route path='/Advertisements' element={
+        <Route path='/Advertisements/:page' element={
           <Advertisements  Advertisements={handleAdvertisementShow}/>
         } />
-        
-        <Route element={
+        <Route path='*' element={
           <Home isLoggedIn={isLoggedIn} loggedInUser={loggedInUser} />
         } />
 

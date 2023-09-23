@@ -126,13 +126,17 @@ app.post('/create', async (req, res) => {
   }
 })
 
-app.post('/show', async (req, res) => {
+app.post('/read', async (req, res) => {
   const { id } = req.body;
   try {
     await sql.connect(config);
     const result = await sql.query(`SELECT * FROM Advertisements WHERE id=\'${id}\'`);
+    
+    
     res.json(result.recordset[0]);
-    console.log(result.recordset[0])
+    //console.log(result.recordset[0])
+    
+    
   } catch (err) {
     console.error('Błąd wczytywania zgłoszenia:', err);
     res.json({ success: false, message: 'Wystąpił błąd wczytywania zgłoszenia.' });
@@ -141,13 +145,13 @@ app.post('/show', async (req, res) => {
   }
 })
 
-app.post('/read', async (req, res) => {
-  //const { id } = req.body;
+app.post('/show', async (req, res) => {
+  const { page } = req.body;
   try {
     await sql.connect(config);
-    const result = await sql.query(`SELECT TOP (25) * FROM Advertisements`);
-    res.json(result);
-    console.log(result)
+    const result = await sql.query(`SELECT * FROM Advertisements`);
+    res.json(result.recordset);
+    //console.log(result.recordset)
   } catch (err) {
     console.error('Błąd wczytywania zgłoszeń:', err);
     res.json({ success: false, message: 'Wystąpił błąd wczytywania zgłoszeń.' });

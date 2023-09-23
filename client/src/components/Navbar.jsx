@@ -18,7 +18,7 @@ return (
 			<NavLink to='/' activeStyle>
 				Strona Główna
 			</NavLink>
-			<NavLink to='/Advertisements' activeStyle>
+			<NavLink to='/Advertisements/1' activeStyle>
 				Ogłoszenia
 			</NavLink>
 			<NavLink to='/contact' activeStyle>
