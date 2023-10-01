@@ -4,19 +4,9 @@ const sql = require('mssql');
 const argon2 = require('argon2');
 const app = express();
 const session = require('express-session');
+const config = require('./configSQL.json')
 const port = 3000;
 
-// Konfiguracja połączenia z bazą danych MSSQL
-const config = {
-  server: '100.67.19.130\\SQLSERVER',    // Adres serwera bazy danych MSSQL
-  user: 'sa',                       // Nazwa użytkownika bazy danych
-  password: 'Ha763DpK&9e@k!',       // Hasło użytkownika bazy danych
-  database: 'Projekt',                // Nazwa bazy danych
- 
-  options:{
-    trustServerCertificate: true
-  }
-};
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
@@ -111,7 +101,7 @@ app.post('/register', async (req, res) => {
   }
   
 })
-
+//Obsługa tworzenia nowego ogłoszenia
 app.post('/create', async (req, res) => {
   const { name, description, price, phone, email, address, city, owner } = req.body;
   try {
@@ -125,7 +115,7 @@ app.post('/create', async (req, res) => {
     sql.close();
   }
 })
-
+//Obsługa wyświetlania ogłoszenia według id
 app.post('/read', async (req, res) => {
   const { id } = req.body;
   try {
@@ -144,7 +134,7 @@ app.post('/read', async (req, res) => {
     sql.close();
   }
 })
-
+//obsługa wyświetlania skrótów do wielu ogłoszeń
 app.post('/show', async (req, res) => {
   const { page } = req.body;
   try {

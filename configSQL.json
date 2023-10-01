@@ -1,0 +1,10 @@
+{
+    "server": "100.67.19.130\\SQLSERVER",
+    "user": "sa",                       
+    "password": "Ha763DpK&9e@k!",       
+    "database": "Projekt",                
+   
+    "options":{
+      "trustServerCertificate": true
+    }
+}
